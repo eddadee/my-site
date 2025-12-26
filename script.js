@@ -49,3 +49,58 @@
     history.pushState(null, "", href);
   });
 })();
+
+(function(){
+  const email = "info" + "@" + "eddadesign.com.au";
+  const el = document.getElementById("email-link");
+  if(el){
+    el.href = "mailto:" + email;
+    el.textContent = email;
+  }
+})();
+
+(function(){
+  const phone = "+61 477 104 981";
+  const tel = "+61477104981";
+  const el = document.getElementById("phone-link");
+  if(el){
+    el.href = "tel:" + tel;
+    el.textContent = phone;
+  }
+})();
+
+
+
+/* Contact detail injection to reduce scraping */
+(function () {
+  // Email (assembled to avoid simple scraping)
+  const emailUser = "info";
+  const emailDomain = "eddadesign.com.au";
+  const email = emailUser + "@" + emailDomain;
+
+  // Phone / SMS
+  const phoneDisplay = "0477 104 981";
+  const phoneDial = "+61477104981";
+
+  function setLink(id, href, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.href = href;
+    if (text) el.textContent = text;
+  }
+
+  // Email links
+  ["email-link-topbar", "email-link-cta", "email-link-contact"].forEach(id => {
+    setLink(id, "mailto:" + email, (id === "email-link-contact") ? email : null);
+  });
+
+  // Phone links
+  ["phone-link-topbar", "phone-link-cta", "phone-link-contact"].forEach(id => {
+    setLink(id, "tel:" + phoneDial, (id === "phone-link-contact") ? phoneDisplay : null);
+  });
+
+  // SMS links
+  ["sms-link-topbar", "sms-link-contact"].forEach(id => {
+    setLink(id, "sms:" + phoneDial, (id === "sms-link-contact") ? phoneDisplay : null);
+  });
+})();
